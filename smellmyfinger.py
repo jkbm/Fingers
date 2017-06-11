@@ -12,13 +12,13 @@ import tkFileDialog
 from Tkinter import *
 
 
-#Выбор изображения для классификации
+#Chosing the image
 file_path_string = tkFileDialog.askopenfilename()
 
-#Загрузка заранее созданого классификатора(fingerprint.py)
+#Load up the classifier from the file(fingerprint.py)
 clf = joblib.load("fingers.pkl")
 
-#Считывание и обработка входного изображения
+#Reading and processing the image
 im = cv2.imread(file_path_string)
 im =  cv2.medianBlur(im,5)
 im_bin = 5
@@ -44,7 +44,7 @@ h = hog(th3, orientations=9, pixels_per_cell=(14,14), cells_per_block=(1, 1), vi
 print len(h)
 
 
-#Предположение ответа и выбор соответствуюшего файла
+#Predicting the answer and formating it to display
 pred = clf.predict(np.array(h, 'float64'))
 prediction = pred[0].replace(' ', '')[:-4]
 pred_path = 'D:\dir\imgres\NISTSpecialDatabase4GrayScaleImagesofFIGS\sd04\png_txt/figs_0\%s.png'%prediction
@@ -53,7 +53,7 @@ line = txt.read().split()
 text_dict = {}
 text_list = {line[0] : line[1], line[2] : line[3], line[4] : line[5]}
 
-#Обработка и отображение результатов
+#Processing and displaying the results
 print text_list
 imp = cv2.imread(pred_path)
 

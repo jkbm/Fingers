@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#Файл обучения системы базой отпечатков и их хар-ми
+#File for creating, training and testing the fingerprint classifier
 import cv2
 from sklearn.externals import joblib
 from skimage.feature import hog
@@ -18,12 +18,12 @@ from sklearn.svm import LinearSVC
 image_list = []
 text_list = []
 
-#Считка файлов изображений и добавление их в масив
+#Reading images from file and appending them to image list
 for filename in glob.glob('NISTSpecialDatabase4GrayScaleImagesofFIGS/sd04/png_txt/figs_0/*.png'): 
     imm=Image.open(filename)
     image_list.append(filename)
 
-#Считка файлов текстового описания отпечатков и добавление их в масив
+#Reading label files and adding them to label list
     for root,dirs,files in os.walk('NISTSpecialDatabase4GrayScaleImagesofFIGS/sd04/png_txt/figs_0/'):
     	filename = filename[:-4]
     	tx=open(filename+'.txt')
@@ -54,7 +54,7 @@ hogs = []
 partimg = image_list[:99]
 ti = time()
 
-#Обработка изображений для лучшего использования
+#working with images to present them in the right form for the classifier
 for img in partimg:
 	im = cv2.imread(img)
 
